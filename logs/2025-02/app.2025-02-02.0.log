@@ -1,0 +1,9 @@
+2025-02-02T21:13:37.050-06:00  INFO 86184 --- [http-nio-9090-exec-1] com.smartlogic.cloud.TokenFetcher        : getAccessToken: 'https://demo.data.progress.cloud/token'
+2025-02-02T21:13:37.684-06:00  INFO 86184 --- [http-nio-9090-exec-1] com.smartlogic.cloud.TokenFetcher        : Status: 200
+2025-02-02T21:13:39.688-06:00  INFO 86184 --- [http-nio-9090-exec-1] o.p.s.services.ConceptReviewService      : Failed to add concept best
+2025-02-02T21:13:40.566-06:00  INFO 86184 --- [http-nio-9090-exec-1] o.p.s.services.ConceptReviewService      : Failed to add concept used
+2025-02-02T21:13:41.482-06:00  INFO 86184 --- [http-nio-9090-exec-1] o.p.s.services.ConceptReviewService      : Failed to add concept Manufacturing
+2025-02-02T21:14:49.683-06:00  INFO 86184 --- [http-nio-9090-exec-3] com.smartlogic.cloud.TokenFetcher        : getAccessToken: 'https://demo.data.progress.cloud/token'
+2025-02-02T21:14:50.114-06:00  INFO 86184 --- [http-nio-9090-exec-3] com.smartlogic.cloud.TokenFetcher        : Status: 200
+2025-02-02T21:14:52.189-06:00  INFO 86184 --- [http-nio-9090-exec-3] o.p.s.services.ConceptReviewService      : Failed to add concept Propane
+2025-02-02T21:14:53.223-06:00  INFO 86184 --- [http-nio-9090-exec-3] o.p.s.services.ConceptReviewService      : Failed to add concept boats
