@@ -32,25 +32,25 @@ import java.util.Set;
 public class ConceptReviewService {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Value("${semaphore.proxy.address}")
-	private Optional<String> proxyAddress;
+	@Value("${semaphore.proxy.address:#{null}}")
+	private String proxyAddress;
 
 	@Value("${semaphore.base.url:#{null}}")
-	private Optional<String> baseUrl;
+	private String baseUrl;
 
 	@Value("${semaphore.model.uri:#{null}}")
-	private Optional<String> modelUri;
+	private String modelUri;
 
 	@Value("${semaphore.token:#{null}}")
-	private Optional<String> semaphoreToken;
+	private String semaphoreToken;
 
 	@Value("${semaphore.header.token:#{null}}")
-	private Optional<String> headerToken;
+	private String headerToken;
 
-	@Value("${sempahore.token.url:#{null}}")
+	@Value("${semaphore.token.url:#{null}}")
 	private String tokenUrl;
 
-	@Value("${sempahore.token.key:#{null}}")
+	@Value("${semaphore.token.key:#{null}}")
 	private String tokenKey;
 
 	public String addConceptsToReview(ConceptReviewRequest request) 
@@ -58,11 +58,11 @@ public class ConceptReviewService {
 		
 		OEClientReadWrite oeClient = new OEClientReadWrite();
 		oeClient.setKRTClient(true);
-		baseUrl.ifPresent(url -> oeClient.setBaseURL(url));
-		modelUri.ifPresent(uri -> oeClient.setModelUri(uri));
-		proxyAddress.ifPresent(proxy -> oeClient.setProxyAddress(proxy));
-		headerToken.ifPresent(header -> oeClient.setHeaderToken(header));
-		semaphoreToken.ifPresent(token -> oeClient.setToken(token));
+		if (proxyAddress != null) oeClient.setProxyAddress(proxyAddress);
+		if (baseUrl != null) oeClient.setBaseURL(baseUrl);
+		if (modelUri != null) oeClient.setModelUri(modelUri);
+		if (headerToken != null) oeClient.setHeaderToken(headerToken);
+		if (semaphoreToken != null) oeClient.setToken(semaphoreToken);
 		if (tokenUrl != null && tokenKey != null) {
 			TokenFetcher tokenFetcher = new TokenFetcher(tokenUrl, tokenKey);
 			oeClient.setCloudToken(tokenFetcher.getAccessToken());
