@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({ "org.progress.semaphore.*"})
-
 @EnableAutoConfiguration
 public class SemaphoreServices {
 	public static void main(String[] args) {

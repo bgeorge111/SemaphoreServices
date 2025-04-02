@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,24 +33,24 @@ public class ConceptReviewService {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Value("${semaphore.proxy.address}")
-	private String proxyAddress;
+	private Optional<String> proxyAddress;
 
-	@Value("${semaphore.base.url}")
-	private String baseUrl;
+	@Value("${semaphore.base.url:#{null}}")
+	private Optional<String> baseUrl;
 
-	@Value("${semaphore.model.uri}")
-	private String modelUri;
+	@Value("${semaphore.model.uri:#{null}}")
+	private Optional<String> modelUri;
 
-	@Value("${semaphore.token}")
-	private String semaphoreToken;
+	@Value("${semaphore.token:#{null}}")
+	private Optional<String> semaphoreToken;
 
-	@Value("${semaphore.header.token}")
-	private String headerToken;
+	@Value("${semaphore.header.token:#{null}}")
+	private Optional<String> headerToken;
 
-	@Value("${sempahore.token.url}")
+	@Value("${sempahore.token.url:#{null}}")
 	private String tokenUrl;
 
-	@Value("${sempahore.token.key}")
+	@Value("${sempahore.token.key:#{null}}")
 	private String tokenKey;
 
 	public String addConceptsToReview(ConceptReviewRequest request) 
@@ -57,11 +58,11 @@ public class ConceptReviewService {
 		
 		OEClientReadWrite oeClient = new OEClientReadWrite();
 		oeClient.setKRTClient(true);
-		oeClient.setBaseURL(baseUrl);
-		oeClient.setModelUri(modelUri);
-//		oeClient.setProxyAddress(proxyAddress);
-//		oeClient.setHeaderToken(headerToken);
-//		oeClient.setToken(headerToken);
+		baseUrl.ifPresent(url -> oeClient.setBaseURL(url));
+		modelUri.ifPresent(uri -> oeClient.setModelUri(uri));
+		proxyAddress.ifPresent(proxy -> oeClient.setProxyAddress(proxy));
+		headerToken.ifPresent(header -> oeClient.setHeaderToken(header));
+		semaphoreToken.ifPresent(token -> oeClient.setToken(token));
 		if (tokenUrl != null && tokenKey != null) {
 			TokenFetcher tokenFetcher = new TokenFetcher(tokenUrl, tokenKey);
 			oeClient.setCloudToken(tokenFetcher.getAccessToken());
@@ -83,6 +84,7 @@ public class ConceptReviewService {
 				successCount++;
 			} catch (OEClientException e) {
 				logger.info("Failed to add concept " + conceptName);
+				logger.debug("Failed to add concept " + e.getMessage());
 				failureCount++;
 				failedConcepts.add(conceptName);
 			}
