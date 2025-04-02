@@ -58,6 +58,8 @@ public class ConceptReviewService {
 		
 		OEClientReadWrite oeClient = new OEClientReadWrite();
 		oeClient.setKRTClient(true);
+
+		
 		if (proxyAddress != null) oeClient.setProxyAddress(proxyAddress);
 		if (baseUrl != null) oeClient.setBaseURL(baseUrl);
 		if (modelUri != null) oeClient.setModelUri(modelUri);
@@ -67,6 +69,11 @@ public class ConceptReviewService {
 			TokenFetcher tokenFetcher = new TokenFetcher(tokenUrl, tokenKey);
 			oeClient.setCloudToken(tokenFetcher.getAccessToken());
 		}
+		logger.info("semaphoreToken ==>" + oeClient.getToken());
+		logger.info("headerToken ==>" + oeClient.getHeaderToken());
+		logger.info("modelUri ==>" + oeClient.getModelUri());
+		logger.info("baseUrl ==>" + oeClient.getBaseURL());
+		logger.info("Cloud Token ==>" + oeClient.getCloudToken());
 
 		ConceptScheme conceptScheme = oeClient.getConceptSchemeByName("Concept Review - Newly Added", "en");
 		int successCount = 0;
